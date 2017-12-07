@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "878084040488",
+    "firebase_url": "https://fastoutsutd.firebaseio.com",
+    "project_id": "fastoutsutd",
+    "storage_bucket": "fastoutsutd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878084040488:android:7930ad805de64b27",
+        "android_client_info": {
+          "package_name": "com.example.ongajong.fastout2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878084040488-2nukdcv1cs61s2i8vbi251c69kj970h5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoCzg3IZoO05FNufeAyfixeOA5bZudFUk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item">
+        <item>Cooking Oil</item>
+        <item> Stretchy Back pants</item>
+        <item> Polo Shirt</item>
+        <item>V-neck sweater</item>
+        <item>Skater graphic T-shirt</item>
+        <item>Thermal Fleece Jacket</item>
+        <item>Thermal Vest</item>
+        <item>Grunge skater jeans</item>
+    </string-array>
+</resources>
