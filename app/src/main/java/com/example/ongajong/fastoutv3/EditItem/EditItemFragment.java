@@ -37,7 +37,46 @@ public class EditItemFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        
+//        if (products == null) {
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef  = database.getReference("ProductList");
+//        Log.i("Laura", "Firebase Reference gotten");
+//        myRef.addChildEventListener(new ChildEventListener() {
+//           @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+//                    Product product = postSnapshot.getValue(Product.class);
+//                    String name = postSnapshot.getKey();
+//                    products.add(product);
+//                    DataProvider.productList.add(product);
+//                    DataProvider.productMap.put(name,product);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+//                    Product product = postSnapshot.getValue(Product.class);
+//                    String name = postSnapshot.getKey();
+//                    products.add(product);
+//                    DataProvider.productList.add(product);
+//                    DataProvider.productMap.put(name,product);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                System.out.println("The read failed: " );
+//
+//            }
+//        });
+//        }
         View rootView = inflater.inflate(R.layout.fragment_edititem, container, false);
         try{ProductListAdapter adapter = new ProductListAdapter(getActivity(),R.layout.list_item, products);
         ListView lv = (ListView) rootView.findViewById(R.id.listView);
