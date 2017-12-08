@@ -88,7 +88,7 @@ public class EditItemFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 //create an instance of class and display there
                 Product product = products.get(position);//have the complex product. Could break this down and pass value to all of product
-                //go with simpler approach: pass product Id, primary key and leave it to decide what to di.
+                //go with simpler approach: pass product Id, primary key and leave dit to decide what to di.
 
                 intent.putExtra(PRODUCT_ID, product.getProductId());//String is the name of extra, and the primitives and other simple types of java
 
