@@ -19,61 +19,61 @@ public class DataProvider {
     public static Map<String, Product> productMap = new HashMap<>();
     public static List<String> catalogue = new ArrayList<>();
     static{
-
-        addProduct("shirt101",
-                "Cross-back training tank",
-                35,23);
-
-        addProduct("jacket101",
-                "Bamboo thermal ski coat",
-                128,24);
-
-        addProduct("pants101",
-                "Stretchy dance pants",
-                85,25);
-
-        addProduct("shirt102",
-                "Ultra-soft tank top",
-                23,26);
-
-        addProduct("shirt103",
-                "V-neck t-shirt",
-                26,27);
-
-        addProduct("sweater101",
-                "V-neck sweater",
-                65,28);
-
-        addProduct("shirt104",
-                "Polo shirt",
-                38,29);
-
-        addProduct("shirt105",
-                "Skater graphic T-shirt\n",
-                45,30);
-
-        addProduct("jacket102",
-                "Thermal fleece jacket",
-                85,31);
-
-        addProduct("shirt106",
-                "V-neck pullover",
-                35,32);
-
-        addProduct("shirt107",
-                "V-neck T-shirt",
-                28,33);
-
-        addProduct("pants102",
-                "Grunge skater jeans",
-                75,34);
-
-        addProduct("vest101",
-                "Thermal vest",
-                95,35);
+//
+//        addProduct("shirt101",
+//                "Cross-back training tank",
+//                35,23);
+//
+//        addProduct("jacket101",
+//                "Bamboo thermal ski coat",
+//                128,24);
+//
+//        addProduct("pants101",
+//                "Stretchy dance pants",
+//                85,25);
+//
+//        addProduct("shirt102",
+//                "Ultra-soft tank top",
+//                23,26);
+//
+//        addProduct("shirt103",
+//                "V-neck t-shirt",
+//                26,27);
+//
+//        addProduct("sweater101",
+//                "V-neck sweater",
+//                65,28);
+//
+//        addProduct("shirt104",
+//                "Polo shirt",
+//                38,29);
+//
+//        addProduct("shirt105",
+//                "Skater graphic T-shirt\n",
+//                45,30);
+//
+//        addProduct("jacket102",
+//                "Thermal fleece jacket",
+//                85,31);
+//
+//        addProduct("shirt106",
+//                "V-neck pullover",
+//                35,32);
+//
+//        addProduct("shirt107",
+//                "V-neck T-shirt",
+//                28,33);
+//
+//        addProduct("pants102",
+//                "Grunge skater jeans",
+//                75,34);
+//
+//        addProduct("vest101",
+//                "Thermal vest",
+//                95,35);
     }
 
-    private static void addProduct(String itemId, String name, double price,Integer quantity) {
+    protected static void addProduct(String itemId, String name, double price,Integer quantity) {
         Product item = new Product(itemId, name, price,quantity);
         productList.add(item);
         productMap.put(itemId, item);

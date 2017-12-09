@@ -11,6 +11,12 @@ public class Product {
     private double price;
     private Integer quantity;
 
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setPrice(double Price){
+        this.price = price;
+    }
     public String getProductId(){return itemId;}
     public String getName(){return name;}
     // public String getDescription(){return description+"\n";}

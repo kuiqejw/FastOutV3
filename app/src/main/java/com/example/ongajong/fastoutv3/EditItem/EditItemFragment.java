@@ -24,9 +24,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class EditItemFragment extends Fragment {
-    static private List<Product> products = DataProvider.productList;
+    static private List<Product> products = DataProvider.productList ;
     public static final String PRODUCT_ID = "PRODUCT_ID";
 
     private static final int DETAIL_REQUEST = 1111;
@@ -37,46 +38,60 @@ public class EditItemFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        if (products == null) {
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef  = database.getReference("ProductList");
-//        Log.i("Laura", "Firebase Reference gotten");
-//        myRef.addChildEventListener(new ChildEventListener() {
-//           @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-//                    Product product = postSnapshot.getValue(Product.class);
-//                    String name = postSnapshot.getKey();
-//                    products.add(product);
-//                    DataProvider.productList.add(product);
-//                    DataProvider.productMap.put(name,product);
+        if (products.size() == 0 ) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef  = database.getReference("ProductList");
+        Log.i("Laura", "Firebase Reference gotten");
+        Log.i("Laura", myRef.getKey());
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot child: dataSnapshot.getChildren()){
+//                    String name = (String) dataSnapshot.child("name").getValue();
+//                Product product = new Product((String) child.child("itemId").getValue(), (String) child.child("name").getValue(),
+//                        (double) child.child("price").getValue(), (Integer) child.child("quantity").getValue());
+//                products.add(product);
+//                DataProvider.productList.add(product);
+//                DataProvider.productMap.put(name,product);
 //                }
 //            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-//                    Product product = postSnapshot.getValue(Product.class);
-//                    String name = postSnapshot.getKey();
-//                    products.add(product);
-//                    DataProvider.productList.add(product);
-//                    DataProvider.productMap.put(name,product);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
 //
 //            @Override
 //            public void onCancelled(DatabaseError databaseError) {
-//                System.out.println("The read failed: " );
 //
 //            }
 //        });
-//        }
+        myRef.addChildEventListener(new ChildEventListener() {
+           @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+              for (DataSnapshot child: dataSnapshot.getChildren()){
+            String name = (String) dataSnapshot.child("name").getValue();
+            Product product = new Product((String) child.child("itemId").getValue(), (String) child.child("name").getValue(),
+                    (double) child.child("price").getValue(), (Integer) child.child("quantity").getValue());
+            products.add(product);
+            DataProvider.productList.add(product);
+            DataProvider.productMap.put(name,product);
+        }
+           }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " );
+
+            }
+        });
+       }
         View rootView = inflater.inflate(R.layout.fragment_edititem, container, false);
         try{ProductListAdapter adapter = new ProductListAdapter(getActivity(),R.layout.list_item, products);
         ListView lv = (ListView) rootView.findViewById(R.id.listView);
@@ -101,6 +116,16 @@ public class EditItemFragment extends Fragment {
         return rootView;
     }
 
+    private void collectCatalogue(Map<String, Object> value) {
+        for (Map.Entry<String, Object> entry: value.entrySet()){
+            Map item = (Map) entry.getValue();
+            Product product = new Product((String) item.get("itemId"), (String) item.get("name"), (double) item.get("price"), (Integer) item.get("quantity"));
+            String name = (String) item.get("name");
+            products.add(product);
+            DataProvider.productList.add(product);
+            DataProvider.productMap.put(name,product);
+        }
+    }
 
 
 }
