@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (position) {
             case 0:
+//                fragment = new AddItemFragment();
                 fragment = new AddItemFragment();
                 break;
             case 1:
@@ -87,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-//
-//            mDrawerList.setItemChecked(position, true);
-//            mDrawerList.setSelection(position);
-//            setTitle(mNavigationDrawerItemTitles[position]);
-//            mDrawerLayout.closeDrawer(mDrawerList);
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(mNavigationDrawerItemTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
 
         } else {
             Log.e("MainActivity", "Error in creating fragment");

@@ -94,6 +94,7 @@ public class EditItemFragment extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                listData.clear();
                 Product data = dataSnapshot.getValue(Product.class);
                 //Now add to ArrayList
                 listData.add(data);
