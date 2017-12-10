@@ -5,6 +5,9 @@ package com.example.ongajong.fastoutv3.EditItem;
  */
 
 public class Product {
+
+
+
     private String itemId;
     private String name;
     //private String description;
@@ -14,16 +17,19 @@ public class Product {
     public void setName(String name){
         this.name = name;
     }
-    public void setPrice(double Price){
+    public String getName(){return name;}
+    public void setPrice(double price){
         this.price = price;
     }
-    public String getProductId(){return itemId;}
-    public String getName(){return name;}
-    // public String getDescription(){return description+"\n";}
     public double getPrice(){return price;}
+    public String getItemId(){return itemId;}
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
     public Integer getQuantity(){return quantity;}
-    public Product(){
+    public void setQuantity(Integer quantity){this.quantity = quantity;}
 
+    public Product(){
     }
     public Product(String productId, String name, double price, Integer quantity){
         this.itemId = productId;

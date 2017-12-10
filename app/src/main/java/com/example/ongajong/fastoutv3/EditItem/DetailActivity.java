@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -73,21 +71,13 @@ public class DetailActivity extends FragmentActivity {
                 DataProvider.productList.remove(product);
                 DataProvider.productMap.remove(product);
 
-                Product item = new Product(product.getProductId(), product.getName(), newPrice,newQuantity);
+                Product item = new Product(product.getItemId(), product.getName(), newPrice,newQuantity);
                 DataProvider.productList.add(item);
-                DataProvider.productMap.put(product.getProductId(), item);
+                DataProvider.productMap.put(product.getItemId(), item);
                 priceText.setText(newPrice.toString());
                 finish();
             }
         });
-        //todo remove image from this if firebase implemented and put in QR CODE if Want
-//        ImageView iv = (ImageView) findViewById(R.id.imageView);
-//        try {
-//            Bitmap bitmap = getBitmapFromAsset(product.getProductId());
-//            iv.setImageBitmap(bitmap);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
 
 

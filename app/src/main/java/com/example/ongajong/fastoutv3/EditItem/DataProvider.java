@@ -77,8 +77,6 @@ public class DataProvider {
         Product item = new Product(itemId, name, price,quantity);
         productList.add(item);
         productMap.put(itemId, item);
-        if(!catalogue.contains(itemId))
-            catalogue.add(itemId); //proviso in case got multiple instances of the same item
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef  = database.getReference("ProductList");
         myRef.child(name).child("price").setValue(price);
@@ -110,7 +108,7 @@ public class DataProvider {
 //
 //        List<Product> filteredList = new ArrayList<>();
 //        for (Product product : productList) {
-//            if (product.getProductId().contains(searchString)) {
+//            if (product.getItemId().contains(searchString)) {
 //                filteredList.add(product);
 //            }
 //        }

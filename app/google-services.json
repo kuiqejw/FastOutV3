@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "878084040488-7a1sisv7e4bk7hucv484cckjhn70h8go.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ongajong.fastout2",
+            "certificate_hash": "42d95cf4c5aa43a958f1a9109e0c2578f930bd9e"
+          }
+        },
+        {
           "client_id": "878084040488-2nukdcv1cs61s2i8vbi251c69kj970h5.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878084040488-2nukdcv1cs61s2i8vbi251c69kj970h5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

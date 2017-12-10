@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             try {
                 selectItem(position);
-            }catch(Exception e){e.printStackTrace();}
+
+
+            }catch(Exception e){
+                e.printStackTrace();}
         }
 
     }
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (position) {
             case 0:
-                fragment = new FixturesFragment();
+                fragment = new AddItemFragment();
                 break;
             case 1:
                 fragment = new EditItemFragment();
@@ -84,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(mNavigationDrawerItemTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
+//
+//            mDrawerList.setItemChecked(position, true);
+//            mDrawerList.setSelection(position);
+//            setTitle(mNavigationDrawerItemTitles[position]);
+//            mDrawerLayout.closeDrawer(mDrawerList);
 
         } else {
             Log.e("MainActivity", "Error in creating fragment");

@@ -7,12 +7,18 @@ package com.example.ongajong.fastoutv3.EditItem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ongajong.fastoutv3.R;
 import com.google.firebase.database.ChildEventListener;
@@ -27,105 +33,143 @@ import java.util.List;
 import java.util.Map;
 
 public class EditItemFragment extends Fragment {
-    static private List<Product> products = DataProvider.productList ;
+    RecyclerView myRecycleview;
+    MyAdapter adapter;
+    List<Product> listData;
+    FirebaseDatabase FDB;
+    DatabaseReference DBR;
     public static final String PRODUCT_ID = "PRODUCT_ID";
-
-    private static final int DETAIL_REQUEST = 1111;
-    public static final String RETURN_MESSAGE = "RETURN MESSAGE";
 
     public EditItemFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (products.size() == 0 ) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef  = database.getReference("ProductList");
-        Log.i("Laura", "Firebase Reference gotten");
-        Log.i("Laura", myRef.getKey());
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot child: dataSnapshot.getChildren()){
-//                    String name = (String) dataSnapshot.child("name").getValue();
-//                Product product = new Product((String) child.child("itemId").getValue(), (String) child.child("name").getValue(),
-//                        (double) child.child("price").getValue(), (Integer) child.child("quantity").getValue());
-//                products.add(product);
-//                DataProvider.productList.add(product);
-//                DataProvider.productMap.put(name,product);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-        myRef.addChildEventListener(new ChildEventListener() {
-           @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-              for (DataSnapshot child: dataSnapshot.getChildren()){
-            String name = (String) dataSnapshot.child("name").getValue();
-            Product product = new Product((String) child.child("itemId").getValue(), (String) child.child("name").getValue(),
-                    (double) child.child("price").getValue(), (Integer) child.child("quantity").getValue());
-            products.add(product);
-            DataProvider.productList.add(product);
-            DataProvider.productMap.put(name,product);
+
+        View rootView = inflater.inflate(R.layout.fragment_edititem, container, false);
+        myRecycleview = (RecyclerView) rootView.findViewById(R.id.rv);
+        myRecycleview.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), myRecycleview, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(),DetailActivity.class);
+                Product product = listData.get(position);
+                intent.putExtra(PRODUCT_ID, product.getItemId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
         }
-           }
+        ));
+        myRecycleview.setHasFixedSize(true);
+        RecyclerView.LayoutManager LM = new LinearLayoutManager(getContext());
+        myRecycleview.setLayoutManager(LM);
+        myRecycleview.setItemAnimator(new DefaultItemAnimator());
+        myRecycleview.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
+        Log.i("onCreateView", "RecycleView Added");
+
+        listData = new ArrayList<>();
+        adapter= new MyAdapter(listData);
+        FDB = FirebaseDatabase.getInstance();
+        GetDataFirebase();
+        return rootView;
+    }
+    void GetDataFirebase(){
+
+        DBR = FDB.getReference("ProductList");
+
+        DBR.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                Product data = dataSnapshot.getValue(Product.class);
+                //Now add to ArrayList
+                listData.add(data);
+                //Now Add List into Adapter/Recyclerview
+                myRecycleview.setAdapter(adapter);
+
+            }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Product data = dataSnapshot.getValue(Product.class);
+                //Now add to ArrayList
+                listData.add(data);
+                //Now Add List into Adapter/Recyclerview
+                myRecycleview.setAdapter(adapter);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " );
 
             }
         });
-       }
-        View rootView = inflater.inflate(R.layout.fragment_edititem, container, false);
-        try{ProductListAdapter adapter = new ProductListAdapter(getActivity(),R.layout.list_item, products);
-        ListView lv = (ListView) rootView.findViewById(R.id.listView);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("Item Created","Look at Detail Activity");
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                //create an instance of class and display there
-                Product product = products.get(position);//have the complex product. Could break this down and pass value to all of product
-                //go with simpler approach: pass product Id, primary key and leave dit to decide what to di.
+    }
+    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+        List<Product> listArray;
+        public MyAdapter(List List){
+            this.listArray = List;
+        }
 
-                intent.putExtra(PRODUCT_ID, product.getProductId());//String is the name of extra, and the primitives and other simple types of java
+        //Ctrl + O
 
-                Log.i("Item Created","Finish Put extra");
-                startActivityForResult(intent,DETAIL_REQUEST);
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+
+            return new MyViewHolder(view);
+        }
+
+
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            Product data = listArray.get(position);
+            holder.Name.setText(data.getName());
+            double pricehing = data.getPrice();
+            String pricetag = String.valueOf(pricehing);
+            holder.Price.setText("$ " + pricetag);
+            holder.Quantity.setText(data.getQuantity().toString());
+
+            DataProvider.productList.add(data);
+            DataProvider.productMap.put(data.getItemId(),data);
+
+        }
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            //Ctrl + O
+            TextView Name;
+            TextView Price;
+            TextView Quantity;
+
+
+            public MyViewHolder(View itemView) {
+                super(itemView);
+                Name = (TextView) itemView.findViewById(R.id.textView);
+                Price = (TextView) itemView.findViewById(R.id.tv_Price);
+                Quantity = (TextView) itemView.findViewById(R.id.tv_Quantity);
+
+
             }
-        });}catch(Exception e){e.printStackTrace();
-        Log.i("Laura", "Error at" + e.toString());
         }
-        return rootView;
-    }
 
-    private void collectCatalogue(Map<String, Object> value) {
-        for (Map.Entry<String, Object> entry: value.entrySet()){
-            Map item = (Map) entry.getValue();
-            Product product = new Product((String) item.get("itemId"), (String) item.get("name"), (double) item.get("price"), (Integer) item.get("quantity"));
-            String name = (String) item.get("name");
-            products.add(product);
-            DataProvider.productList.add(product);
-            DataProvider.productMap.put(name,product);
+        @Override
+        public int getItemCount() {
+            return listArray.size();
         }
     }
-
 
 }
